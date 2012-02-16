@@ -42,14 +42,14 @@ catch:function(inData){
 //	$('#mainContainer').append(html);
 
 			var slider = new Slider($('#upperLeft'));
-	slider	.setSize(size.height, size.width)
+	slider	.setSize(Math.floor(size.height/2), Math.floor(size.width/2))
 			.setTheme('theme-light')
 			.setTransition('transition-topfade')
 			.setDuration(3000)
 			.setPhotos(sliderImages);
 A_slider=slider;
 	var slider2 = new Slider($('#upperRight'));
-	slider2	.setSize(size.height, size.width)
+	slider2	.setSize(Math.floor(size.height/2), Math.floor(size.width/2))
 			.setTheme('theme-light')
 			.setTransition('transition-left')
 			.setPhotos(sliderImages)
