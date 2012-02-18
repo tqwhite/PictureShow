@@ -12,9 +12,12 @@ $.Controller('PictureShow.controls.slideshow',
 /** @Prototype */
 {
 init : function(){
-
+	this.idNameBase='block';
+	this.blockCount=3;
 	this.element.html("//picture_show/controls/slideshow/views/init.ejs",{
-		message: "Hello World!"
+		message: "Hello World!",
+		idNameBase:this.idNameBase,
+		blockCount:this.blockCount
 	});
 	
 	PictureShow.picture.getList({}, this.callback('catch'));
@@ -27,7 +30,8 @@ catch:function(inData){
 		size={},
 		size.height=0,
 		size.width=0,
-		count=0;
+		count=0,
+		sliders=[];
 		
 	console.dir(fileList);
 	
@@ -40,22 +44,27 @@ catch:function(inData){
 	//	if (count==3){break;}
 	}
 //	$('#mainContainer').append(html);
-
-			var slider = new Slider($('#upperLeft'));
-	slider	.setSize(Math.floor(size.height/2), Math.floor(size.width/2))
-			.setTheme('theme-light')
-			.setTransition('transition-topfade')
+	
+	upperLeftDomObj=$('#block0');
+	upperRightDomObj=$('#block1');
+	
+	for (var i=0; i<this.blockCount; i++){
+		sliders[i]={};
+		sliders[i].domObj=$('#'+this.idNameBase+i);
+		sliders[i].slider=new Slider(sliders[i].domObj)
+			.setSize(upperLeftDomObj.height(), upperLeftDomObj.width())
+			.setTheme('theme-dark')
+			.setTransition('transition-right')
 			.setDuration(3000)
-			.setPhotos(sliderImages);
-A_slider=slider;
-	var slider2 = new Slider($('#upperRight'));
-	slider2	.setSize(Math.floor(size.height/2), Math.floor(size.width/2))
-			.setTheme('theme-light')
-			.setTransition('transition-left')
 			.setPhotos(sliderImages)
-			.setDuration(2000)
-			.slide(Math.floor(count/2));
-			
+			.slide(this.blockCount-i);
+	
+	}
+	
+
+	$('.slider .options').hide();
+	$('.slider.theme-dark').css('background', '#777');
+	$('.slider.theme-dark .slide-image').css('background', '#777');	
 
 }
 });
